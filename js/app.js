@@ -3,8 +3,8 @@
 
 var garden = {};
 
-  StackMob.init({
-    appName: "facebook",
+   StackMob.init({
+    appName: "connectstackmob",
     clientSubdomain: "stackmob339",
     apiVersion: 0
   });
