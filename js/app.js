@@ -33,7 +33,6 @@ var garden = {};
         add : function(e) {
             e.preventDefault();
 
-            console.log('add')
 
              FB.getLoginStatus(function(response) {
               if (response.status === 'connected') {
@@ -45,6 +44,7 @@ var garden = {};
               } else if (response.status === 'not_authorized') {
                 console.log('not_authorized');
                 
+                $.mobile.changePage("#fb",'pop');          
                 // the user is logged in to Facebook, 
                 // but has not authenticated your app
               } else {
@@ -54,8 +54,7 @@ var garden = {};
               }
              });
         
-         console.log('add 2')
-
+      
         }
 
     });
