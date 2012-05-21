@@ -1,0 +1,12 @@
+.ui-icon-favorite {
+   background: url("images/heart.png")  no-repeat rgba(0, 0, 0, 0.4) !important;
+}
+
+.ui-icon-share {
+	background: url("images/group.png") no-repeat rgba(0, 0, 0, 0.4) !important;
+}
+
+.ui-icon-pickup {
+	background: url("images/calendar.png") no-repeat rgba(0, 0, 0, 0.4) !important;
+}
+
