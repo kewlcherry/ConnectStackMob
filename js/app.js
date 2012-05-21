@@ -44,7 +44,7 @@ var garden = {};
               } else if (response.status === 'not_authorized') {
                 console.log('not_authorized');
                 
-                $.mobile.changePage("#fb",'pop');          
+                $.mobile.changePage("#fb","'pop",true, true);          
                 // the user is logged in to Facebook, 
                 // but has not authenticated your app
               } else {
