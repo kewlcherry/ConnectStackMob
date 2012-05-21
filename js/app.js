@@ -49,6 +49,7 @@ var garden = {};
                 // but has not authenticated your app
               } else {
                 console.log('not_logged in');
+                 $.mobile.changePage("#fb","'pop",true, true); 
                 
                 // the user isn't logged in to Facebook.
               }
