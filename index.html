@@ -58,28 +58,18 @@
 </script>
 
 
-  <div data-role="page" id="home">
-    <div data-role="header">
-      <h1>Home</h1>
-    </div>
-    <div data-role="content">
-        <ul data-role="listview" data-inset='true'>
-          <li><a href="#veggies">Gardens</a></li>
-        </ul>        
-    </div>
-  </div>
 
 
   <!-- LIST -->
-  <div data-role="page" id="veggies">
+  <div data-role="page" id="list">
     <div data-role="header" id="listHeader">
       <a href="#home" data-rel="back" data-icon="back" data-iconpos="notext">home</a>
       <h1>Gardens</h1>
-      <a href="#" data-role="button" data-icon="add" id="goToAddPage" >Add</a>
+      <a href="#" data-role="button" data-icon="add" id="addBtn" >Add</a>
     </div>
 
     <div data-role="content">
-        <a href="#" id="shareVeggie" data-role="button">share</a>
+        <a href="#" id="share" data-role="button">share</a>
         <!-- the contents of the list view will be rendered via the backbone view -->
         <ul id="veggies-list" data-role="listview" data-inset="true" data-theme="d" data-divider-theme="e">
           <li>Error Loading</li>

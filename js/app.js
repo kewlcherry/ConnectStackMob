@@ -1,7 +1,7 @@
 /*jslint browser: true */
 /*global _, jQuery, $, console, Backbone */
 
-var garden = {};
+var myapp = {};
 
    StackMob.init({
     appName: "connectstackmob",
@@ -14,25 +14,24 @@ var garden = {};
     var latitude, longitude, latlon;
 
 
-    garden.Veggie = StackMob.Model.extend({
-        schemaName: 'veggies',
+    myapp.Todo = StackMob.Model.extend({
+        schemaName: 'todo',
        
     });
 
     
-    garden.Veggies = StackMob.Collection.extend({
-        model: garden.Veggie
+    myapp.Todos = StackMob.Collection.extend({
+        model: myapp.Todo
     });
 
-    garden.VeggieListHeader = Backbone.View.extend({            
+    myapp.ListHeader = Backbone.View.extend({            
         el: "#listHeader",
         events: {
-            "click #goToAddPage" : "add"
+            "click #addBtn" : "add"
         },
         
         add : function(e) {
             e.preventDefault();
-
 
              FB.getLoginStatus(function(response) {
               if (response.status === 'connected') {
@@ -61,9 +60,9 @@ var garden = {};
     });
 
 
-    garden.VeggieListView = Backbone.View.extend({
+    myapp.ListView = Backbone.View.extend({
         tagName: 'ul',
-        id: 'veggies-list',
+        id: 'list',
         attributes: {"data-role": 'listview', "data-inset": "true", "data-theme" : "c", "data-divider-theme" :"e"},
             
         
@@ -78,7 +77,7 @@ var garden = {};
         render: function() {
 		
             var container = this.options.viewContainer,
-                //veggies = this.collection,
+                todos = this.collection,
                 template = this.template,
                 listView = $(this.el);
             
@@ -139,7 +138,7 @@ var garden = {};
             FB.ui(
                {
                 method: 'stream.publish',
-                name : 'Garden Swap',
+                name : 'My Connect StackMob app',
                 caption: 'harvested',
                 picture: 'https://www.stackmob.com/resources/images/logo.png',
                 description:  total + ' ' + name,
@@ -162,7 +161,7 @@ var garden = {};
      
     });
 
-    garden.VeggieAddView = Backbone.View.extend({
+    myapp.AddView = Backbone.View.extend({
 
         el: "#addPage",
         events: {
@@ -170,17 +169,14 @@ var garden = {};
         },
        
         add: function() {
-            var veggiesList = $('#veggies-list'),
+            var list = $('#list'),
                 template = _.template($('#veggie-list-item-template').html()),
                 item = $('#addForm').serializeObject();
     
-            // SET THE GEOPOINT
-            var loc = new StackMob.GeoPoint(garden.getLat(),garden.getLon());
-            item.latlon = loc.toJSON();
 
-            var veggie = new garden.Veggie(item);
+            var todo = new myapp.Todo(item);
 
-            veggie.create({
+            todo.create({
                 success: function(model) {
                 
                     veggiesList = $("#veggies-list");
@@ -193,10 +189,7 @@ var garden = {};
                 }
               });
 
-            //distance = garden.getDistance(garden.getLat(), garden.getLon(), 37.797306,-122.456703)
-            //alert(Math.round(distance) + " miles");
-
-
+         
             return this;
         }
        
@@ -205,7 +198,7 @@ var garden = {};
 
 
 
-    garden.FBLoginView = Backbone.View.extend({
+    myapp.FBLoginView = Backbone.View.extend({
 
         el: "#fb",
         events: {
@@ -333,96 +326,26 @@ var garden = {};
 
 
 
-    garden.initData = function(){
-        //garden.veggies = new garden.Veggies();
-        //garden.veggies.fetch({async: false});
-       // garden.geolocation();  // use async false to have the app wait for data before rendering the list
+    myapp.initData = function(){
+        myapp.todos = new myapp.Todos();
+        myapp.todos.fetch({async: false});
     };
 
-    garden.geolocation = function() {
-        navigator.geolocation.getCurrentPosition(garden.geolocation_success,garden.geolocation_errors);  
-    }  
-
-    garden.geolocation_success = function(position){ 
-        garden.setLat(position.coords.latitude);
-        garden.setLon(position.coords.longitude);
-
-        var veggiesListContainer = $('#veggies').find(":jqmData(role='content')"),
-        veggiesListView;
-        veggiesListView = new garden.VeggieListView({collection: garden.veggies, viewContainer: veggiesListContainer});
-        veggiesListView.render();
-    } 
-
     
-
-    garden.setLat = function(lat) {
-        this.latitude = lat;
-    }
-
-    garden.getLat = function(){
-        return this.latitude;
-    }
-
-   
-
-    garden.setLon = function(lon) {
-        this.longitude = lon;
-    }
-
-    garden.getLon = function(){
-        return this.longitude;
-    }
-
-    garden.getDistance = function(lat1, lon1, lat2, lon2){
-  
-        var R = 6371; // Radius of the earth in km
-        var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
-        var dLon = (lon2-lon1).toRad(); 
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *  Math.sin(dLon/2) * Math.sin(dLon/2); 
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-        var d = R * c; // Distance in km
-        var miles = d *  0.621371192;
-
-        return miles;
-
-    }
-
-    garden.geolocation_errors = function(error)  
-        {  
-            switch(error.code)  
-            {  
-                case error.PERMISSION_DENIED: alert("user did not share geolocation data");  
-                break;  
-  
-                case error.POSITION_UNAVAILABLE: alert("could not detect current position");  
-                break;  
-  
-                case error.TIMEOUT: alert("retrieving position timed out");  
-                break;  
-  
-                default: alert("unknown error");  
-                break;  
-            }  
-        }  
     
 }(jQuery));
 
-$('#home').live('pageinit', function(event){
-    fbLoginView = new garden.FBLoginView();
-});
 
-$('#veggies').live('pageinit', function(event){
+$('#list').live('pageinit', function(event){
 
-   //var veggiesListContainer = $('#veggies').find(":jqmData(role='content')"),
-    //veggiesListView;
-    garden.initData();
-    veggieListHeader = new garden.VeggieListHeader();
-
-    //veggiesListView = new garden.VeggieListView({collection: garden.veggies, viewContainer: veggiesListContainer});
-    //veggiesListView.render();
-//37.797306,-122.456703
-    veggieListView = new garden.VeggieListView();
-    veggiesAddView = new garden.VeggieAddView();
+  // var listContainer = $('#list').find(":jqmData(role='content')"),
+   //listContainer.render()
+    myapp.initData();
+    
+    listHeader = new myapp.ListHeader();
+    listView = new myapp.ListView();
+    listView.render();
+    addView = new myapp.AddView();
 
 
 });
