@@ -11,12 +11,8 @@ var myapp = {};
 
 (function($){
     
-    var latitude, longitude, latlon;
-
-
-    myapp.Todo = StackMob.Model.extend({
-        schemaName: 'todo',
-       
+     myapp.Todo = StackMob.Model.extend({
+        schemaName: 'todo'
     });
 
     
@@ -76,7 +72,7 @@ var myapp = {};
         
         render: function() {
 		
-            var container = this.options.viewContainer,
+            var container = this.options.listContainer,
                 todos = this.collection,
                 template = this.template,
                 listView = $(this.el);
@@ -338,13 +334,15 @@ var myapp = {};
 
 $('#list').live('pageinit', function(event){
 
-  // var listContainer = $('#list').find(":jqmData(role='content')"),
-   //listContainer.render()
+    var listContainer = $('#list').find(":jqmData(role='content')"),
+    listView;
+
     myapp.initData();
-    
+
     listHeader = new myapp.ListHeader();
-    listView = new myapp.ListView();
+    listView = new myapp.ListView({collection: myapp.todos, viewContainer: listContainer});
     listView.render();
+
     addView = new myapp.AddView();
 
 
@@ -354,12 +352,6 @@ $(document).bind("mobileinit", function(){
     $.mobile.page.prototype.options.addBackBtn= true;
  });
 
-
-if (typeof(Number.prototype.toRad) === "undefined") {
-  Number.prototype.toRad = function() {
-    return this * Math.PI / 180;
-  }
-}
 
 $.fn.serializeObject = function()
 {
