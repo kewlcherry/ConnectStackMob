@@ -78,7 +78,7 @@ var myapp = {};
                 template = this.template,
                 listView = $(this.el);
             
-            container.html($(this.el));
+            //container.html($(this.el));
 
             var q = new StackMob.Collection.Query();
             //q.mustBeNearMi('latlon', new StackMob.GeoPoint(37.797306,-122.456703), 25);
