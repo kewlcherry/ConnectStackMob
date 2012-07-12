@@ -6,6 +6,7 @@ var myapp = {};
    StackMob.init({
     appName: "connectstackmob",
     clientSubdomain: "stackmob339",
+    publicKey: "bdd4e367-d20f-49be-980e-75dad9d61c7d",
     apiVersion: 0
   });
 
