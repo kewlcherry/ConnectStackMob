@@ -5,10 +5,10 @@ var myapp = {};
 
 
 StackMob.init({
-    appName: "counsellor",
-    clientSubdomain: "kewlcherrygmailcom",
-    publicKey: "29fba28d-2c84-4559-a976-792af985b6da",
-    apiVersion: 0
+	appName: "counsellor",
+	clientSubdomain: "kewlcherrygmailcom",
+	publicKey: "29fba28d-2c84-4559-a976-792af985b6da",
+	apiVersion: 0
 });
 
 
